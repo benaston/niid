@@ -1,0 +1,30 @@
+{
+	"name": "niid",
+	"version": "0.0.1",
+	"description": "Terse argument checking.",
+	"keywords": ["argument", "need", "check", "niid"],
+	"homepage": "https://github.com/benaston/niid",
+	"bugs": {
+		"url": "https://github.com/benaston/niid/issues",
+		"email": "ben@bj.ma"
+	},
+	"license": "MIT",
+	"files": ["dist/*"],
+	"main": "dist/niid.min.js",
+	"private": false,
+	"dependencies": {},
+	"author": {
+		"name": "Ben Aston",
+		"email": "ben@bj.ma",
+		"url": "http://www.bj.ma"
+	},
+	"devDependencies": {
+		"grunt": "^0.4.5",
+		"grunt-contrib-concat": "~0.3.0",
+		"grunt-contrib-jshint": "^0.11.0",
+		"grunt-contrib-uglify": "~0.2.2",
+		"grunt-replace": "^0.7.8",
+		"jasmine-node": "^1.14.5"
+	},
+	"repository": "git@github.com:benaston/niid.git"
+}
