@@ -6,6 +6,86 @@ describe('need', function() {
 
 	describe('when needed arguments are supplied', function() {
 
+		describe('when no named arguments are defined in the call to need', function() {
+
+			describe('with one argument', function() {
+
+				it('should throw an exception if the argument is undefined', function() {
+					//arrange
+					function foo(bar) {
+						need(arguments);
+					}
+
+					//act & assert
+					expect(function() {
+						foo(undefined);
+					}).toThrow('argument not defined.');
+				});
+
+				it('should *not* throw an exception the argument is supplied', function() {
+					//arrange
+					function foo(bar) {
+						need(arguments);
+					}
+
+					//act & assert
+					expect(foo(null)).toBe(undefined); // i.e. no exception thrown
+				});
+
+			});
+
+			describe('with two arguments', function() {
+
+				it('should throw an exception if the first argument is undefined', function() {
+					//arrange
+					function foo(bar, bam) {
+						need(arguments);
+					}
+
+					//act & assert
+					expect(function() {
+						foo(undefined, null);
+					}).toThrow('argument not defined.');
+				});
+
+				it('should throw an exception if the second argument is undefined', function() {
+					//arrange
+					function foo(bar, bam) {
+						need(arguments);
+					}
+
+					//act & assert
+					expect(function() {
+						foo(null, undefined);
+					}).toThrow('argument not defined.');
+				});
+
+				it('should throw an exception if both arguments are undefined', function() {
+					//arrange
+					function foo(bar, bam) {
+						need(arguments);
+					}
+
+					//act & assert
+					expect(function() {
+						foo(undefined, undefined);
+					}).toThrow('argument not defined.');
+				});
+
+				it('should *not* throw an exception if both arguments are supplied', function() {
+					//arrange
+					function foo(bar, bam) {
+						need(arguments);
+					}
+
+					//act & assert
+					expect(foo(null, null)).toBe(undefined); // i.e. no exception thrown
+				});
+
+			});
+
+		});
+
 		describe('when no unneeded arguments are defined', function() {
 
 			it('should *not* throw an exception if there is a single argument', function() {
@@ -37,6 +117,7 @@ describe('need', function() {
 				//act & assert
 				expect(foo(null, null)).toBe(undefined); // i.e. no exception thrown
 			});
+
 		});
 
 		describe('when unneeded arguments are defined', function() {
@@ -60,6 +141,7 @@ describe('need', function() {
 				//act & assert
 				expect(foo(null)).toBe(undefined); // i.e. no exception thrown
 			});
+
 		});
 
 	});
@@ -127,4 +209,5 @@ describe('need', function() {
 		});
 
 	})
+
 });

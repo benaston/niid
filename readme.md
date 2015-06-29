@@ -4,15 +4,21 @@ Terse argument checking.
 
 A function that when supplied with arguments and argument names will throw an exception when they are not present.
 
-File size: 487 bytes.<br/>
-Supported platforms: server and browser.<br/>
-Supported language versions: ES5 and above.
+File size: **487 bytes**.<br/>
+Supported platforms: **server and browser**.<br/>
+Supported language versions: **ES5 and above**.
 
 Supports gaps in argument lists.
 
+If you use this library in your software please tweet me @benastontweet.
+
+## Installation
+
+```npm install niid```
+
 ## Example 1
 
-```
+```javascript
 var need = require('niid').need;
 
 function myFunction(foo, bar, bam) {
@@ -28,7 +34,7 @@ myFunction(null, undefined, null); // throws 'bar is not defined.'
 
 ## Example 2 (argument gaps)
 
-```
+```javascript
 var need = require('niid').need;
 
 function myFunction(foo, bar, bam) {
@@ -42,7 +48,7 @@ myFunction(null, undefined, undefined); // throws 'bam is not defined.'
 
 ## Example 3 (trailing argument gaps)
 
-```
+```javascript
 var need = require('niid').need;
 
 function myFunction(foo, bar, bam) {
@@ -52,6 +58,24 @@ function myFunction(foo, bar, bam) {
 
 myFunction(null); // 'OK'
 myFunction(null, undefined, undefined); // 'OK'
+```
+
+## Example 4 (short-hand for "all arguments required")
+
+```javascript
+var need = require('niid').need;
+
+function myFunction(foo, bar, bam) {
+	need(arguments);
+	return 'OK';
+}
+
+myFunction(undefined, undefined, undefined); // throws 'argument is not defined.'
+myFunction(null, undefined, undefined); // throws 'argument is not defined.'
+myFunction(undefined, null, undefined); // throws 'argument is not defined.'
+myFunction(undefined, undefined, null); // throws 'argument is not defined.'
+myFunction(undefined, null, null); // throws 'argument is not defined.'
+myFunction(null, null, null); // 'OK'
 ```
 
 ## License & Copyright

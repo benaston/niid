@@ -1,6 +1,6 @@
 {
 	"name": "niid",
-	"version": "0.0.1",
+	"version": "0.0.4",
 	"description": "Terse argument checking.",
 	"keywords": ["argument", "need", "check", "niid"],
 	"homepage": "https://github.com/benaston/niid",
