@@ -2,6 +2,64 @@
 
 var need = self.niid.need;
 
+describe('need when supplied with a non-arguments object', function() {
+
+	it('should *not* throw an exception the argument is null', function() {
+		//arrange & act & assert
+		expect(need(null)).toBe(null); // i.e. no exception thrown
+	});
+
+	it('should *not* throw an exception if the argument is undefined', function() {
+		//arrange & act & assert
+		expect(need(undefined)).toBe(undefined); // i.e. no exception thrown
+	});
+
+	it('should throw an exception if the argument is undefined', function() {
+		//arrange
+		function foo(options) {
+			need(options, 'foo');
+		}
+
+		//act & assert
+		expect(function() {
+			foo({});
+		}).toThrow('foo not defined.');
+	});
+
+	it('should throw an exception if no arguments are supplied, but a property is undefined because this is a shorthand syntax ', function() {
+		//arrange
+		function foo(options) {
+			need(options);
+		}
+
+		//act & assert
+		expect(function() {
+			foo({ foo: undefined, bar: 'bar' });
+		}).toThrow('foo not defined.');
+	});
+
+	it('should not throw an exception if no arguments are supplied, and all properties are defined', function() {
+		//arrange
+		function foo(options) {
+			need(options);
+		}
+
+		//act & assert
+		expect(foo({ foo: 'foo', bar: 'bar' })).toBe(undefined);
+	})
+
+	it('should not throw an exception if the specified properties are defined', function() {
+		//arrange
+		function foo(options) {
+			need(options, 'foo');
+		}
+
+		//act & assert
+		expect(foo({ foo: 'foo', bar: undefined })).toBe(undefined);
+	});
+
+});
+
 describe('need', function() {
 
 	describe('when needed arguments are supplied', function() {

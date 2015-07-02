@@ -4,11 +4,11 @@ Terse argument checking.
 
 A function that when supplied with arguments and argument names will throw an exception when they are not present.
 
-File size: **487 bytes**.<br/>
+File size: **720 bytes**.<br/>
 Supported platforms: **server and browser**.<br/>
 Supported language versions: **ES5 and above**.
 
-Supports gaps in argument lists.
+Supports gaps in argument lists. Also works with objects and their properties.
 
 If you use this library in your software please tweet me @benastontweet.
 
@@ -76,6 +76,20 @@ myFunction(undefined, null, undefined); // throws 'argument is not defined.'
 myFunction(undefined, undefined, null); // throws 'argument is not defined.'
 myFunction(undefined, null, null); // throws 'argument is not defined.'
 myFunction(null, null, null); // 'OK'
+```
+
+## Example 5 (object properties)
+
+```javascript
+var need = require('niid').need;
+
+function myFunction(options) {
+	need(options, 'foo');
+	return 'OK';
+}
+
+myFunction({foo: undefined}); // throws 'foo is not defined.'
+myFunction({foo: 'foo'}); // 'OK'
 ```
 
 ## License & Copyright

@@ -4,7 +4,8 @@
 
 	var namespace = {};
 
-	;(function(namespace) {
+	;
+(function(namespace) {
 
 	'use strict';
 
@@ -20,31 +21,64 @@
 	 * @return {undefined}
 	 */
 	function need(args) {
-		var names, iterator, reduceFn;
+		var argsArray, restArgs;
 
-		if(!args) {
-			return;
+		if (!args) {
+			return args;
 		}
 
-		args = Array.prototype.slice.call(args);
-		iterator = arguments.length > 1 ? Array.prototype.slice.call(arguments, 1) : args;
+		argsArray = Array.prototype.slice.call(args);
+		restArgs = Array.prototype.slice.call(arguments, 1);
+
+		if (isArgumentObject(args)) {
+			return argCheck(argsArray, restArgs);
+		}
+
+		return objectCheck(args, restArgs);
+	}
+
+	function argCheck(args, restArgs) {
+		var iterator, reduceFn;
+
+		iterator = restArgs.length ? restArgs : args;
 		reduceFn = iterator === args ? undefinedCheck : unneededCheck.bind(null, args);
 
 		iterator.reduce(reduceFn, null);
 	}
 
-	function unneededCheck(args, p, c, i) {
-		if(c === '_') { return; }
+	function objectCheck(o, restArgs) {
+		var iterator, reduceFn;
 
-		if(args[i] === undefined) {
+		iterator = restArgs.length ? restArgs : Object.keys(o);
+		reduceFn = undefinedCheckIn.bind(null, o);
+
+		iterator.reduce(reduceFn, null);
+	}
+
+	function undefinedCheckIn(o, p, c) {
+		if (o[c] === undefined) {
+			throw c + ' not defined.';
+		}
+	}
+
+	function unneededCheck(args, p, c, i) {
+		if (c === '_') {
+			return;
+		}
+
+		if (args[i] === undefined) {
 			throw c + ' not defined.';
 		}
 	}
 
 	function undefinedCheck(p, c, i) {
-		if(c === undefined) {
+		if (c === undefined) {
 			throw 'argument not defined.';
 		}
+	}
+
+	function isArgumentObject(item) {
+		return Object.prototype.toString.call(item) === '[object Arguments]';
 	}
 
 	namespace.need = need;
