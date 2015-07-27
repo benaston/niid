@@ -4,7 +4,9 @@ Terse argument checking.
 
 A function that when supplied with arguments and argument names will throw an exception when they are not present.
 
-File size: **720 bytes**.<br/>
+Also provides `needBeAlike` which will ensure an argument is 'like' an example.
+
+File size: **1089 bytes**.<br/>
 Supported platforms: **server and browser**.<br/>
 Supported language versions: **ES5 and above**.
 
@@ -32,7 +34,26 @@ myFunction(undefined, null, null); // throws 'foo is not defined.'
 myFunction(null, undefined, null); // throws 'bar is not defined.'
 ```
 
-## Example 2 (argument gaps)
+## Example 2
+
+```javascript
+var needBeAlike = require('niid').needBeAlike;
+
+var example = { foo: '', bar: { bam: 0 } };
+
+function myFunction(options) {
+	needBeAlike(options, example);
+	return 'OK';
+}
+
+myFunction({}); // throws 'object unlike example.'
+myFunction({ foo: null }); // throws 'object unlike example.'
+myFunction({ foo: 1 }); // throws 'object unlike example.'
+myFunction({ foo: 'foo' }); // throws 'object unlike example.'
+myFunction({ foo: 'foo', bar: { bam: 42 } }); // OK
+```
+
+## Example 3 (argument gaps)
 
 ```javascript
 var need = require('niid').need;
@@ -46,7 +67,7 @@ myFunction(null, undefined, null); // 'OK'
 myFunction(null, undefined, undefined); // throws 'bam is not defined.'
 ```
 
-## Example 3 (trailing argument gaps)
+## Example 4 (trailing argument gaps)
 
 ```javascript
 var need = require('niid').need;
@@ -60,7 +81,7 @@ myFunction(null); // 'OK'
 myFunction(null, undefined, undefined); // 'OK'
 ```
 
-## Example 4 (short-hand for "all arguments required")
+## Example 5 (short-hand for "all arguments required")
 
 ```javascript
 var need = require('niid').need;
@@ -78,7 +99,7 @@ myFunction(undefined, null, null); // throws 'argument is not defined.'
 myFunction(null, null, null); // 'OK'
 ```
 
-## Example 5 (object properties)
+## Example 6 (object properties)
 
 ```javascript
 var need = require('niid').need;
